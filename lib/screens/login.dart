@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:restapi/screens/user_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:restapi/screens/user_list.dart';
@@ -11,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isvisible = false;
+  bool isvisible = true;
   bool isLoading = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -39,7 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
         final response = await http.post(uri, body: body);
         if (response.statusCode == 200) {
           if (mounted) {
-            showSuccessMessage('You have successfully logged in');
+            // showSuccessMessage('You have logged in successfully');
+            showToast("You have logged in successfully");
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => const UserListScreen(),
@@ -50,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         } else {
           showErrorMessage('Entered incorrect email and password');
+          // showToast("Entered incorrect email and passwords");
         }
       } catch (e) {
         showErrorMessage('$e');
@@ -59,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       showErrorMessage('Fields are required');
+      // showToast("Fields are required");
     }
   }
 
@@ -82,6 +86,18 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snacks);
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        webShowClose: false,
+        fontSize: 16.0);
   }
 
   @override
@@ -120,8 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                     icon: Icon(isvisible == true
-                        ? Icons.visibility
-                        : Icons.visibility_off),
+                        ? Icons.visibility_off
+                        : Icons.visibility),
                   ),
                 ),
               ),
@@ -133,7 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         login(emailController.text.toString(),
                             passwordController.text.toString());
                       },
-                      child: const Text("Login"))
+                      child: const Text("Login"),
+                    )
             ],
           ),
         ),

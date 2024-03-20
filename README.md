@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+| Email | Password |
+|-----------------|-----------------|
+| eve.holt@reqres.in | cityslicka |
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
