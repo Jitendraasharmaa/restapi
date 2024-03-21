@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:restapi/screens/user_list.dart';
 import 'package:http/http.dart' as http;
-import 'package:restapi/screens/user_list.dart';
+import 'package:restapi/screens/home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login(String email, String password) async {
     const url = 'https://reqres.in/api/register';
 
-    if (emailController.text.isNotEmpty || passwordController.text.isNotEmpty) {
+    if (email.isNotEmpty || password.isNotEmpty) {
       setState(() {
         isLoading = true;
       });
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             showToast("You have logged in successfully");
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const UserListScreen(),
+                builder: (context) => const HomeScreen(),
               ),
             );
             emailController.text = '';
